@@ -1,6 +1,6 @@
 # GitHub Codespaces Development Guide
 
-Integration blueprint is fully compatible with GitHub Codespaces for cloud-based development.
+Hagelschutz VKF is fully compatible with GitHub Codespaces for cloud-based development.
 
 ## Quick Start
 

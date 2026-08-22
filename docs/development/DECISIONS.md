@@ -114,6 +114,50 @@ Each decision is documented with:
 
 ---
 
+### Own aiohttp Client Instead of a PyPI Library
+
+**Date:** 2026-08-19
+
+**Context:** The integration talks to a single VKF hail-warning endpoint: an unauthenticated
+`GET /devices/{id}/poll?hwtypeId={id}` returning `{"currentState": <int>}`. No PyPI package wraps this vendor API.
+
+**Decision:** Implement `api/client.py` as a small `aiohttp`-based client using Home Assistant's shared client
+session, rather than searching for or publishing a wrapping library.
+
+**Rationale:**
+
+- Per `AGENTS.md` § Custom Integration Flexibility, a maintained library is preferred only when it already fits; one
+  unauthenticated GET endpoint with a two-field JSON response does not justify a dependency.
+- No OAuth2, no complex protocol, no standard like MQTT that would argue for a library.
+
+**Consequences:**
+
+- If the vendor's API grows (authentication, more endpoints), this decision should be revisited.
+
+---
+
+### No Authentication Error Class, No Reauth Flow
+
+**Date:** 2026-08-19
+
+**Context:** `blueprint.coordinator.instructions.md` lists a three-exception hierarchy (`...Error`,
+`...CommunicationError`, `...AuthenticationError`) as required for an API client, mirroring the blueprint's
+username/password example. The VKF poll endpoint takes no credentials at all.
+
+**Decision:** `api/__init__.py` defines only `HagelschutzVkfApiClientError` and
+`HagelschutzVkfApiClientCommunicationError`. The config flow has no reauth step, and the coordinator never raises
+`ConfigEntryAuthFailed`.
+
+**Rationale:** There is nothing to authenticate and nothing that could be rejected as invalid credentials, so an
+`AuthenticationError` class and a reauth flow would be dead code with no way to ever trigger.
+
+**Consequences:**
+
+- If the vendor later adds authentication (an API key, a token), this decision needs to be revisited alongside the
+  API client and config flow.
+
+---
+
 ## Future Considerations
 
 ### State Restoration

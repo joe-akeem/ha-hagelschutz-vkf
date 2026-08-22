@@ -1,0 +1,11 @@
+schemaVersion: "2"
+kind: mixin
+name: hagelschutz-vkf-sandbox
+displayName: ha-hagelschutz-vkf project sandbox
+description: >
+  Project sandbox definition for ha-hagelschutz-vkf. Currently a placeholder:
+  the no-Bash policy already lives in the committed .claude/settings.json,
+  which sbx picks up automatically from the working directory, so this kit
+  does not need to inject anything. Extend this kit's `setup` block (install
+  steps, env vars, network rules) as the project gains build/test tooling
+  requirements. See .sbx/README.md for how the sandbox is used.

@@ -10,25 +10,13 @@ does not; this project's identity, layering, workflow policy and traps do.
 
 ## Which repository is this?
 
-`initialize.sh` is present, so **this repository has not been initialised yet** — the domain, class prefix and
-directory names below are still the template's placeholders. The script replaces them across the whole repository and
-then deletes itself, and template sync never restores it. **Its absence, not any wording here, is what marks an
-initialised integration.**
+**This is an initialised Home Assistant integration repository.** It was created from the
+[ha-hagelschutz-vkf](https://github.com/joe-akeem/ha-hagelschutz-vkf) template and personalised by
+`initialize.sh`, which has already run and removed itself. It is not a blueprint — the integration is the product, and
+guidance about maintaining the template does not apply here.
 
-Two kinds of repository are in this state, and they are byte-identical — nothing in the working tree tells them apart:
-
-- **The upstream template.** The placeholders are permanent here, and the example integration is itself the thing
-  being maintained. Every change ships to every downstream repository through the weekly template-sync pull request,
-  so skills and instruction files must use the `<domain>` and `{ClassPrefix}` placeholders rather than the concrete
-  identifiers, and [`blueprint-skill-maintenance`](.agents/skills/blueprint-skill-maintenance/SKILL.md) governs the
-  shipped skill set.
-- **A fresh copy** made with GitHub's "Use this template" button, which still has to be initialised. **Do not write
-  integration code first** — `initialize.sh` would overwrite it. Run `./initialize.sh`, then
-  [`blueprint-scaffold`](.agents/skills/blueprint-scaffold/SKILL.md); when existing integration code is being migrated
-  in, [`blueprint-import`](.agents/skills/blueprint-import/SKILL.md) covers the order instead.
-
-When the request does not make clear which of the two this is, ask. **Do not infer it from the git remote** — a
-contributor's fork of the template is not a copy awaiting initialisation.
+Template sync still delivers upstream improvements to shared files; `.templatesyncignore` lists what it must never
+touch. See [`blueprint-tooling`](.agents/skills/blueprint-tooling/SKILL.md).
 
 <!-- repo-role:end -->
 
@@ -36,14 +24,14 @@ contributor's fork of the template is not a copy awaiting initialisation.
 
 **Identity — use these everywhere, never a variant:**
 
-- **Domain:** `ha_integration_domain`
-- **Title:** Integration Blueprint
-- **Class prefix:** `IntegrationBlueprint`
-- **Repository:** jpawlowski/hacs.integration_blueprint
+- **Domain:** `hagelschutz_vkf`
+- **Title:** Hagelschutz VKF
+- **Class prefix:** `HagelschutzVkf`
+- **Repository:** joe-akeem/ha-hagelschutz-vkf
 
 **Key directories:**
 
-- `custom_components/ha_integration_domain/` — integration code
+- `custom_components/hagelschutz_vkf/` — integration code
 - `config/` — Home Assistant configuration for local testing
 - `tests/` — mirrors the integration structure
 - `script/` — development and validation scripts
@@ -68,31 +56,31 @@ agent that implements it. If yours does not, read the `SKILL.md` before starting
 
 ### Routing table
 
-| Working on                                             | Procedure                                                              | Style rules (`.agents/instructions/`)                  |
-| ------------------------------------------------------ | ---------------------------------------------------------------------- | ------------------------------------------------------ |
-| an entity platform or an individual entity             | [`ha-entity-platform`](.agents/skills/ha-entity-platform/SKILL.md)     | `blueprint.entities`                                   |
-| a service action                                       | [`ha-service-action`](.agents/skills/ha-service-action/SKILL.md)       | `blueprint.service_actions`, `blueprint.services_yaml` |
-| config flow, options, reauth, reconfigure, discovery   | [`ha-config-flow`](.agents/skills/ha-config-flow/SKILL.md)             | `blueprint.config_flow`                                |
-| the coordinator, the API client, runtime debugging     | [`ha-coordinator-debug`](.agents/skills/ha-coordinator-debug/SKILL.md) | `blueprint.coordinator`                                |
-| translations, `icons.json`                             | [`ha-translations`](.agents/skills/ha-translations/SKILL.md)           | `blueprint.translations`                               |
-| tests                                                  | [`ha-testing`](.agents/skills/ha-testing/SKILL.md)                     | `blueprint.tests`                                      |
-| repair issues and flows                                | [`ha-breaking-changes`](.agents/skills/ha-breaking-changes/SKILL.md)   | `blueprint.repairs`                                    |
-| anything that could break existing installs            | [`ha-breaking-changes`](.agents/skills/ha-breaking-changes/SKILL.md)   | —                                                      |
-| a Quality Scale audit or pre-release review            | [`ha-quality-review`](.agents/skills/ha-quality-review/SKILL.md)       | —                                                      |
-| deprecation warnings, verifying an API is current      | [`ha-modern-apis`](.agents/skills/ha-modern-apis/SKILL.md)             | —                                                      |
-| a request whose requirements are not settled yet       | [`ha-grill`](.agents/skills/ha-grill/SKILL.md)                         | —                                                      |
-| planning a large change, recording a decision          | [`ha-planning`](.agents/skills/ha-planning/SKILL.md)                   | —                                                      |
-| commit messages, versioning, changelog, release notes  | [`ha-release`](.agents/skills/ha-release/SKILL.md)                     | `blueprint.commit-message`                             |
-| triaging or fixing a backlog of GitHub issues          | [`ha-issue-triage`](.agents/skills/ha-issue-triage/SKILL.md)           | —                                                      |
-| validation scripts, dependencies, hooks, template sync | [`blueprint-tooling`](.agents/skills/blueprint-tooling/SKILL.md)       | `blueprint.shell`                                      |
-| `manifest.json`                                        | —                                                                      | `blueprint.manifest`                                   |
-| diagnostics                                            | —                                                                      | `blueprint.diagnostics`                                |
-| any Python, YAML, JSON or Markdown file                | —                                                                      | `blueprint.python`, `.yaml`, `.json`, `.markdown`      |
-| commenting any file, in any syntax                     | —                                                                      | `blueprint.comments`                                   |
+| Working on                                             | Procedure                                                                      | Style rules (`.agents/instructions/`)                  |
+| ------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------ |
+| an entity platform or an individual entity             | [`ha-entity-platform`](.agents/skills/ha-entity-platform/SKILL.md)             | `blueprint.entities`                                   |
+| a service action                                       | [`ha-service-action`](.agents/skills/ha-service-action/SKILL.md)               | `blueprint.service_actions`, `blueprint.services_yaml` |
+| config flow, options, reauth, reconfigure, discovery   | [`ha-config-flow`](.agents/skills/ha-config-flow/SKILL.md)                     | `blueprint.config_flow`                                |
+| the coordinator, the API client, runtime debugging     | [`ha-coordinator-debug`](.agents/skills/ha-coordinator-debug/SKILL.md)         | `blueprint.coordinator`                                |
+| translations, `icons.json`                             | [`ha-translations`](.agents/skills/ha-translations/SKILL.md)                   | `blueprint.translations`                               |
+| tests                                                  | [`ha-testing`](.agents/skills/ha-testing/SKILL.md)                             | `blueprint.tests`                                      |
+| repair issues and flows                                | [`ha-breaking-changes`](.agents/skills/ha-breaking-changes/SKILL.md)           | `blueprint.repairs`                                    |
+| anything that could break existing installs            | [`ha-breaking-changes`](.agents/skills/ha-breaking-changes/SKILL.md)           | —                                                      |
+| a Quality Scale audit or pre-release review            | [`ha-quality-review`](.agents/skills/ha-quality-review/SKILL.md)               | —                                                      |
+| deprecation warnings, verifying an API is current      | [`ha-modern-apis`](.agents/skills/ha-modern-apis/SKILL.md)                     | —                                                      |
+| a request whose requirements are not settled yet       | [`ha-grill`](.agents/skills/ha-grill/SKILL.md)                                 | —                                                      |
+| planning a large change, recording a decision          | [`ha-planning`](.agents/skills/ha-planning/SKILL.md)                           | —                                                      |
+| commit messages, versioning, changelog, release notes  | [`ha-release`](.agents/skills/ha-release/SKILL.md)                             | `blueprint.commit-message`                             |
+| triaging or fixing a backlog of GitHub issues          | [`ha-issue-triage`](.agents/skills/ha-issue-triage/SKILL.md)                   | —                                                      |
+| validation scripts, dependencies, hooks, template sync | [`blueprint-tooling`](.agents/skills/blueprint-tooling/SKILL.md)               | `blueprint.shell`                                      |
+| starting/troubleshooting the local dev container       | [`hagelschutz-devcontainer`](.agents/skills/hagelschutz-devcontainer/SKILL.md) | —                                                      |
+| `manifest.json`                                        | —                                                                              | `blueprint.manifest`                                   |
+| diagnostics                                            | —                                                                              | `blueprint.diagnostics`                                |
+| any Python, YAML, JSON or Markdown file                | —                                                                              | `blueprint.python`, `.yaml`, `.json`, `.markdown`      |
+| commenting any file, in any syntax                     | —                                                                              | `blueprint.comments`                                   |
 
-Two one-time skills exist for a fresh repository and remove themselves as their final step:
-[`blueprint-scaffold`](.agents/skills/blueprint-scaffold/SKILL.md) (turn the template into an integration for one real
-device) and [`blueprint-import`](.agents/skills/blueprint-import/SKILL.md) (migrate an existing integration in).
+One one-time skill exists for a fresh repository and removes itself as its final step:
+[`blueprint-import`](.agents/skills/blueprint-import/SKILL.md) (migrate an existing integration in).
 
 Skills are validated by `script/skills-check` (part of `script/lint-check`, so CI enforces it).
 

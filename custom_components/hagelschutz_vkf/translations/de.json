@@ -1,0 +1,58 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "description": "Falls du Hilfe bei der Konfiguration brauchst, wirf einen Blick in die [Dokumentation]({documentation_url}).",
+        "data": {
+          "device_id": "Geräte-Seriennummer",
+          "hwtype_id": "Hardware-Typ-ID"
+        },
+        "data_description": {
+          "device_id": "Die Seriennummer, die auf deinem VKF-Hagelsensor aufgedruckt ist, z. B. VKDEMO123456.",
+          "hwtype_id": "Der Hardware-Typ-Code für dein Gerät, den du vom Anbieter erhalten hast."
+        }
+      },
+      "reconfigure": {
+        "description": "Aktualisiere die Geräte-Seriennummer oder die Hardware-Typ-ID für diese Integration.",
+        "data": {
+          "device_id": "Geräte-Seriennummer",
+          "hwtype_id": "Hardware-Typ-ID"
+        },
+        "data_description": {
+          "device_id": "Die Seriennummer, die auf deinem VKF-Hagelsensor aufgedruckt ist, z. B. VKDEMO123456.",
+          "hwtype_id": "Der Hardware-Typ-Code für dein Gerät, den du vom Anbieter erhalten hast."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Der Hagelwarn-Dienst konnte mit diesen Angaben nicht erreicht werden.",
+      "device_not_found": "Für diese Kombination aus Seriennummer und Hardware-Typ-ID ist kein Gerät registriert.",
+      "vendor_error": "Der Hagelwarn-Dienst meldet: {vendor_message}",
+      "unknown": "Ein unbekannter Fehler ist aufgetreten."
+    },
+    "abort": {
+      "already_configured": "Dieses Gerät ist bereits konfiguriert.",
+      "reconfigure_successful": "Die Neukonfiguration war erfolgreich."
+    }
+  },
+  "exceptions": {
+    "update_failed": {
+      "message": "Der Hagelwarnstatus konnte nicht abgerufen werden."
+    },
+    "device_not_found": {
+      "message": "Der Hagelwarn-Dienst erkennt diese Kombination aus Seriennummer und Hardware-Typ-ID nicht mehr."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "hail_status": {
+        "name": "Hagelstatus",
+        "state": {
+          "no_hail": "Kein Hagel",
+          "hail": "Hagel",
+          "test_alarm": "Testalarm"
+        }
+      }
+    }
+  }
+}

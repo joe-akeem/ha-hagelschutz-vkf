@@ -1,0 +1,14 @@
+{
+  "entity": {
+    "sensor": {
+      "hail_status": {
+        "default": "mdi:weather-hail",
+        "state": {
+          "no_hail": "mdi:shield-check",
+          "hail": "mdi:weather-hail",
+          "test_alarm": "mdi:bell-alert"
+        }
+      }
+    }
+  }
+}

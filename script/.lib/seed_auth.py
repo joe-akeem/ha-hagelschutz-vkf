@@ -90,7 +90,7 @@ def token_is_usable() -> bool:
     try:
         meta = json.loads(META_FILE.read_text(encoding="utf-8"))
         store = json.loads(AUTH_STORE.read_text(encoding="utf-8"))
-    except OSError, ValueError:
+    except (OSError, ValueError):
         return False
 
     known = {token["id"] for token in store["data"]["refresh_tokens"]}

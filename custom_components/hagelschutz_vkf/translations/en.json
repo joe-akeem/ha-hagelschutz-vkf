@@ -1,0 +1,58 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "description": "If you need help with the configuration have a look at the [documentation]({documentation_url}).",
+        "data": {
+          "device_id": "Device serial",
+          "hwtype_id": "Hardware type ID"
+        },
+        "data_description": {
+          "device_id": "The serial number printed on your VKF hail sensor, e.g. VKDEMO123456.",
+          "hwtype_id": "The hardware-type code for your device, as given to you by the vendor."
+        }
+      },
+      "reconfigure": {
+        "description": "Update the device serial or hardware-type ID for this integration.",
+        "data": {
+          "device_id": "Device serial",
+          "hwtype_id": "Hardware type ID"
+        },
+        "data_description": {
+          "device_id": "The serial number printed on your VKF hail sensor, e.g. VKDEMO123456.",
+          "hwtype_id": "The hardware-type code for your device, as given to you by the vendor."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Unable to reach the hail-warning service with these details.",
+      "device_not_found": "No device is registered for this combination of serial number and hardware type ID.",
+      "vendor_error": "The hail-warning service reported: {vendor_message}",
+      "unknown": "An unknown error occurred."
+    },
+    "abort": {
+      "already_configured": "This device is already configured.",
+      "reconfigure_successful": "Reconfiguration was successful."
+    }
+  },
+  "exceptions": {
+    "update_failed": {
+      "message": "Failed to fetch the hail-warning status."
+    },
+    "device_not_found": {
+      "message": "The hail-warning service no longer recognizes this serial number and hardware type ID combination."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "hail_status": {
+        "name": "Hail status",
+        "state": {
+          "no_hail": "No hail",
+          "hail": "Hail",
+          "test_alarm": "Test alarm"
+        }
+      }
+    }
+  }
+}

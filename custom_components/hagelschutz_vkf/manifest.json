@@ -1,0 +1,14 @@
+{
+  "domain": "hagelschutz_vkf",
+  "name": "Hagelschutz VKF",
+  "codeowners": [
+    "@joe-akeem"
+  ],
+  "config_flow": true,
+  "documentation": "https://github.com/joe-akeem/ha-hagelschutz-vkf",
+  "integration_type": "service",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/joe-akeem/ha-hagelschutz-vkf/issues",
+  "requirements": [],
+  "version": "0.1.0"
+}

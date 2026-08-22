@@ -1,4 +1,4 @@
-"""Shared fixtures for the ha_integration_domain tests."""
+"""Shared fixtures for the hagelschutz_vkf tests."""
 
 from collections.abc import Generator
 from typing import Any
@@ -7,12 +7,11 @@ from unittest.mock import AsyncMock, patch
 import pytest
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
-from custom_components.ha_integration_domain.const import DOMAIN
-from homeassistant.const import CONF_PASSWORD, CONF_USERNAME
+from custom_components.hagelschutz_vkf.const import CONF_DEVICE_ID, CONF_HWTYPE_ID, DOMAIN
 from homeassistant.core import HomeAssistant
 
-# The response the demo endpoint returns; the client turns it into the device payload.
-API_RESPONSE: dict[str, Any] = {"userId": 1, "id": 1, "title": "demo", "body": "demo"}
+# The API's documented success response: {"currentState": <int>}. 0 = no hail.
+API_RESPONSE: dict[str, Any] = {"currentState": 0}
 
 
 @pytest.fixture(autouse=True)
@@ -22,9 +21,9 @@ def auto_enable_custom_integrations(enable_custom_integrations: None) -> None:
 
 @pytest.fixture
 def mock_api() -> Generator[AsyncMock]:
-    """Replace the client's HTTP layer, keeping its payload logic under test."""
+    """Replace the client's HTTP layer, keeping its request-building logic under test."""
     with patch(
-        "custom_components.ha_integration_domain.api.client.IntegrationBlueprintApiClient._api_wrapper",
+        "custom_components.hagelschutz_vkf.api.client.HagelschutzVkfApiClient._api_wrapper",
         new_callable=AsyncMock,
         return_value=API_RESPONSE,
     ) as api_wrapper:
@@ -36,9 +35,9 @@ def config_entry() -> MockConfigEntry:
     """Return a config entry for this integration."""
     return MockConfigEntry(
         domain=DOMAIN,
-        title="demo",
-        unique_id="demo",
-        data={CONF_USERNAME: "demo", CONF_PASSWORD: "secret"},
+        title="VKDEMO123456",
+        unique_id="VKDEMO123456",
+        data={CONF_DEVICE_ID: "VKDEMO123456", CONF_HWTYPE_ID: 0},
     )
 
 

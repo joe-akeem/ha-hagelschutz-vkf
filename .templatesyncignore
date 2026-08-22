@@ -70,6 +70,10 @@ CLAUDE.md
 # initialize.sh deletes it; this entry stops the sync from reinstating it.
 .agents/skills/blueprint-skill-maintenance/
 #
+# blueprint-scaffold is a one-time skill retired once scaffolding was complete
+# for this integration. This entry stops the sync from reinstating it.
+.agents/skills/blueprint-scaffold/
+#
 # Skills YOU add are never touched — template sync only overwrites files that
 # changed upstream, and a directory the blueprint does not have is not one of
 # them. No entry needed.
