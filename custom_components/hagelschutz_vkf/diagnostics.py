@@ -1,31 +1,26 @@
 """
-Diagnostics support for ha_integration_domain.
+Diagnostics support for hagelschutz_vkf.
 
 https://developers.home-assistant.io/docs/core/integration_diagnostics
 """
 
+import dataclasses
 from typing import TYPE_CHECKING, Any
 
-from homeassistant.const import CONF_PASSWORD, CONF_USERNAME
+from custom_components.hagelschutz_vkf.const import CONF_DEVICE_ID
 from homeassistant.helpers.redact import async_redact_data
 
 if TYPE_CHECKING:
     from homeassistant.core import HomeAssistant
 
-    from .data import IntegrationBlueprintConfigEntry
+    from .data import HagelschutzVkfConfigEntry
 
-TO_REDACT = {
-    CONF_PASSWORD,
-    CONF_USERNAME,
-    "api_key",
-    "serial_number",
-    "token",
-}
+TO_REDACT = {CONF_DEVICE_ID}
 
 
 async def async_get_config_entry_diagnostics(
     hass: HomeAssistant,
-    entry: IntegrationBlueprintConfigEntry,
+    entry: HagelschutzVkfConfigEntry,
 ) -> dict[str, Any]:
     """
     Return diagnostics for a config entry.
@@ -42,12 +37,11 @@ async def async_get_config_entry_diagnostics(
             "minor_version": entry.minor_version,
             "state": str(entry.state),
             "data": async_redact_data(entry.data, TO_REDACT),
-            "options": async_redact_data(entry.options, TO_REDACT),
         },
         "coordinator": {
             "last_update_success": coordinator.last_update_success,
             "update_interval": str(coordinator.update_interval),
             "last_exception": str(coordinator.last_exception) if coordinator.last_exception else None,
-            "data": async_redact_data(coordinator.data, TO_REDACT),
+            "data": dataclasses.asdict(coordinator.data) if coordinator.data else None,
         },
     }

@@ -1,5 +1,5 @@
 """
-Runtime data types for ha_integration_domain.
+Runtime data types for hagelschutz_vkf.
 
 Access pattern: entry.runtime_data.client / entry.runtime_data.coordinator
 """
@@ -11,17 +11,17 @@ if TYPE_CHECKING:
     from homeassistant.config_entries import ConfigEntry
     from homeassistant.loader import Integration
 
-    from .api import IntegrationBlueprintApiClient
-    from .coordinator import IntegrationBlueprintDataUpdateCoordinator
+    from .api import HagelschutzVkfApiClient
+    from .coordinator import HagelschutzVkfDataUpdateCoordinator
 
 
-type IntegrationBlueprintConfigEntry = ConfigEntry[IntegrationBlueprintData]
+type HagelschutzVkfConfigEntry = ConfigEntry[HagelschutzVkfData]
 
 
 @dataclass
-class IntegrationBlueprintData:
+class HagelschutzVkfData:
     """Runtime data stored on the config entry after a successful setup."""
 
-    client: IntegrationBlueprintApiClient
-    coordinator: IntegrationBlueprintDataUpdateCoordinator
+    client: HagelschutzVkfApiClient
+    coordinator: HagelschutzVkfDataUpdateCoordinator
     integration: Integration
