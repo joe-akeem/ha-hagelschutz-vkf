@@ -22,7 +22,7 @@ if TYPE_CHECKING:
 
     from .data import HagelschutzVkfConfigEntry
 
-PLATFORMS: list[Platform] = [Platform.SENSOR]
+PLATFORMS: list[Platform] = [Platform.BINARY_SENSOR, Platform.SENSOR]
 
 CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
 
@@ -40,7 +40,7 @@ async def async_setup_entry(
     """
     client = HagelschutzVkfApiClient(
         device_id=entry.data[CONF_DEVICE_ID],
-        hwtype_id=entry.data[CONF_HWTYPE_ID],
+        hwtype_id=int(entry.data[CONF_HWTYPE_ID]),
         session=async_get_clientsession(hass),
     )
 

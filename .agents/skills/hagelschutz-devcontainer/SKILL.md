@@ -4,14 +4,14 @@ description: >-
   Start, rebuild or troubleshoot the local Home Assistant dev container on this developer's machine
   (Rancher Desktop + IntelliJ IDEA, no working native Dev Container support). Use when asked to "start
   the devcontainer", "start Home Assistant locally", "test the integration locally", "run
-  script/develop", or when the dev container fails to build, Home Assistant is unreachable at
-  localhost:8123, or `hass`/`node`/`devcontainer` commands misbehave. Covers the one-command script,
-  the open IntelliJ dev-container bug and its CLI fallback, the Node/nvm version pitfall, and the manual
-  port-forward fix the bare CLI needs because it does not implement `forwardPorts`. SYMPTOMS — load this
-  if you are about to: run `script/setup/bootstrap` or `script/develop` directly on the macOS host
-  instead of inside the container; treat `docker ps` showing no port as proof the container is broken;
-  combine `--network container:<id>` with `-p` in a `docker run`; or chase a "randomUUID is not a
-  function" crash as anything other than an old Node version.
+  script/develop", or when the container fails to build, HA is unreachable at localhost:8123, or
+  `hass`/`node`/`devcontainer` commands misbehave. Covers the one-command script, the IntelliJ
+  dev-container bug and its CLI fallback, the Node/nvm version pitfall, and the manual port-forward fix
+  the bare CLI needs since it lacks `forwardPorts`. SYMPTOMS — load this if about to: run
+  `script/setup/bootstrap` or `script/develop` on the macOS host instead of the container; treat
+  `docker ps` showing no port as proof the container is broken; combine `--network container:<id>` with
+  `-p` in `docker run`; or chase a "randomUUID is not a function" crash as anything other than an old
+  Node version.
 ---
 
 # Start the local dev container

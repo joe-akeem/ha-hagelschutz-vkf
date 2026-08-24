@@ -44,6 +44,11 @@
     }
   },
   "entity": {
+    "binary_sensor": {
+      "hail_alert": {
+        "name": "Hail alarm"
+      }
+    },
     "sensor": {
       "hail_status": {
         "name": "Hail status",
