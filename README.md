@@ -31,11 +31,12 @@ raising Somfy shutters when a hail warning starts.
   instead of breaking the integration
 - **Honest availability**: if the API can't be reached, the sensor goes `unavailable` — it never shows a stale value
 
-**This integration will set up the following platform.**
+**This integration will set up the following platforms.**
 
-| Platform | Description                                                    |
-| -------- | -------------------------------------------------------------- |
-| `sensor` | Current hail-warning status for the configured device/location |
+| Platform        | Description                                                                          |
+| --------------- | ------------------------------------------------------------------------------------ |
+| `sensor`        | Current hail-warning status for the configured device/location                       |
+| `binary_sensor` | Whether a hail alarm (real or test) is currently active — `on`/`off` for automations |
 
 > [!IMPORTANT]
 > The vendor requires a **minimum poll interval of 120 seconds** — this integration polls at exactly that interval,
@@ -98,11 +99,13 @@ hardware-type ID is caught immediately instead of failing silently later.
 
 ### Step 3: Start Using!
 
-The integration creates one sensor entity for the configured device:
+The integration creates two entities for the configured device:
 
 - **Hail status**: `no_hail`, `hail`, or `test_alarm`, refreshed every 120 seconds
+- **Hail alarm**: `on`/`off` — on for both `hail` and `test_alarm`, so you can trigger automations (e.g. closing
+  shutters) on either without inspecting the state text
 
-Find it in **Settings** → **Devices & Services** → **Hagelschutz VKF** → click on the device.
+Find them in **Settings** → **Devices & Services** → **Hagelschutz VKF** → click on the device.
 
 ## Available Entities
 
@@ -112,6 +115,14 @@ Find it in **Settings** → **Devices & Services** → **Hagelschutz VKF** → c
   - States: `no_hail` (0), `hail` (1), `test_alarm` (2)
   - Attributes: `raw_state` (the untranslated `currentState` value) plus any field the API returns beyond
     `currentState`
+
+### Binary Sensor
+
+- **Hail alarm**: `on` whenever `currentState` is present and non-zero (covers both `hail` and `test_alarm`), `off`
+  when it is `0` or missing
+  - Device class: `safety` (`on` = unsafe), so it gets the standard safety icon and voice-assistant behavior
+  - Use this instead of the `sensor` entity's state text when building automations — a plain `state: "on"` trigger
+    reacts to a test alarm the same way it reacts to real hail
 
 ## Configuration
 
