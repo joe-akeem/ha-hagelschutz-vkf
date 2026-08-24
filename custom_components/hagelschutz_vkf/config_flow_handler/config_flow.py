@@ -15,6 +15,11 @@ from .schemas import get_reconfigure_schema, get_user_schema
 from .validators import validate_device
 
 
+def _normalize(user_input: dict[str, Any]) -> dict[str, Any]:
+    """Coerce the hwtype ID to int before it reaches entry.data — NumberSelector always yields a float."""
+    return user_input | {CONF_HWTYPE_ID: int(user_input[CONF_HWTYPE_ID])}
+
+
 class HagelschutzVkfConfigFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle the config flow for hagelschutz_vkf."""
 
@@ -42,7 +47,7 @@ class HagelschutzVkfConfigFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
                 return self.async_create_entry(
                     title=user_input[CONF_DEVICE_ID],
-                    data=user_input,
+                    data=_normalize(user_input),
                 )
 
         integration = async_get_loaded_integration(self.hass, DOMAIN)
@@ -75,7 +80,7 @@ class HagelschutzVkfConfigFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             errors, placeholders = await self._async_validate(user_input)
             if not errors:
-                return self.async_update_reload_and_abort(entry, data_updates=user_input)
+                return self.async_update_reload_and_abort(entry, data_updates=_normalize(user_input))
 
         return self.async_show_form(
             step_id="reconfigure",
