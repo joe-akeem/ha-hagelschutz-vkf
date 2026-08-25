@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING, Any
 from custom_components.hagelschutz_vkf.api import (
     HagelschutzVkfApiClientDeviceNotFoundError,
     HagelschutzVkfApiClientError,
+    HagelschutzVkfApiClientVendorError,
 )
 from custom_components.hagelschutz_vkf.const import CURRENT_STATE_MAP, DOMAIN
 from homeassistant.exceptions import ConfigEntryError
@@ -28,6 +29,8 @@ class HagelschutzVkfDataUpdateCoordinator(DataUpdateCoordinator[HagelschutzVkfPo
     """Poll the hail-warning status once per interval and hand it to every entity."""
 
     config_entry: HagelschutzVkfConfigEntry
+    last_error_type: str | None = None
+    last_error_message: str | None = None
 
     async def _async_update_data(self) -> HagelschutzVkfPollResult:
         """
@@ -44,13 +47,27 @@ class HagelschutzVkfDataUpdateCoordinator(DataUpdateCoordinator[HagelschutzVkfPo
         try:
             payload = await self.config_entry.runtime_data.client.async_get_data()
         except HagelschutzVkfApiClientDeviceNotFoundError as exception:
+            self.last_error_type = type(exception).__name__
+            self.last_error_message = str(exception)
             raise ConfigEntryError(
                 translation_domain=DOMAIN,
                 translation_key="device_not_found",
             ) from exception
-        except HagelschutzVkfApiClientError as exception:
+        except HagelschutzVkfApiClientVendorError as exception:
+            self.last_error_type = exception.vendor_exception
+            self.last_error_message = exception.vendor_message
             raise UpdateFailed(
                 translation_domain=DOMAIN,
                 translation_key="update_failed",
             ) from exception
+        except HagelschutzVkfApiClientError as exception:
+            self.last_error_type = type(exception).__name__
+            self.last_error_message = str(exception)
+            raise UpdateFailed(
+                translation_domain=DOMAIN,
+                translation_key="update_failed",
+            ) from exception
+
+        self.last_error_type = None
+        self.last_error_message = None
         return _parse_poll_result(payload)

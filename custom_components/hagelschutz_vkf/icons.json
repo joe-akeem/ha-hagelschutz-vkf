@@ -8,6 +8,12 @@
           "hail": "mdi:weather-hail",
           "test_alarm": "mdi:bell-alert"
         }
+      },
+      "last_error_type": {
+        "default": "mdi:alert-circle-outline"
+      },
+      "last_error_message": {
+        "default": "mdi:message-alert-outline"
       }
     }
   }

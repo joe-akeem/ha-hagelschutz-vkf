@@ -32,13 +32,14 @@ class HagelschutzVkfApiClientVendorError(HagelschutzVkfApiClientError):
     Exception carrying a vendor-reported error this client has no specific handling for.
 
     The vendor's error body always has the shape {"exception": <name>, "message": <text>};
-    `vendor_message` is that text verbatim (usually English), so it can be shown to the user
-    even for a vendor exception name nobody has seen before.
+    `vendor_exception` and `vendor_message` carry both fields verbatim so the caller can surface
+    either — the name for diagnostics, the message (usually English) for the user.
     """
 
-    def __init__(self, vendor_message: str) -> None:
-        """Initialize the exception, keeping the vendor's message verbatim."""
+    def __init__(self, vendor_exception: str, vendor_message: str) -> None:
+        """Initialize the exception, keeping the vendor's exception name and message verbatim."""
         super().__init__(vendor_message)
+        self.vendor_exception = vendor_exception
         self.vendor_message = vendor_message
 
 
@@ -63,7 +64,7 @@ async def _verify_response_or_raise(response: aiohttp.ClientResponse) -> None:
         message = str(payload.get("message", payload["exception"]))
         if payload["exception"] == "DeviceNotFoundException":
             raise HagelschutzVkfApiClientDeviceNotFoundError(message)
-        raise HagelschutzVkfApiClientVendorError(message)
+        raise HagelschutzVkfApiClientVendorError(payload["exception"], message)
 
     response.raise_for_status()
 

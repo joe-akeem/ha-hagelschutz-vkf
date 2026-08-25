@@ -58,7 +58,7 @@ async def test_user_flow_device_not_found(hass: HomeAssistant, mock_api: AsyncMo
 
 async def test_user_flow_vendor_error_shows_vendor_message(hass: HomeAssistant, mock_api: AsyncMock) -> None:
     """An unrecognized vendor exception surfaces the vendor's own message verbatim."""
-    mock_api.side_effect = HagelschutzVkfApiClientVendorError("Some server-side glitch")
+    mock_api.side_effect = HagelschutzVkfApiClientVendorError("VendorGlitchException", "Some server-side glitch")
 
     result = await hass.config_entries.flow.async_init(
         DOMAIN,

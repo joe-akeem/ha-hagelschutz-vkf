@@ -11,8 +11,9 @@ ATTRIBUTION = "Data provided by the VKF hail-warning network (meteo.netitservice
 CONF_DEVICE_ID = "device_id"
 CONF_HWTYPE_ID = "hwtype_id"
 
-# Vendor-mandated floor; not user-configurable.
-UPDATE_INTERVAL = timedelta(seconds=120)
+# Vendor caps polls at ~750/day (undocumented; learned from a TooManyPollsException response).
+# 180s (~480/day) leaves headroom for config-flow validation polls and HA restarts.
+UPDATE_INTERVAL = timedelta(seconds=180)
 
 HAIL_STATE_NO_HAIL = "no_hail"
 HAIL_STATE_HAIL = "hail"

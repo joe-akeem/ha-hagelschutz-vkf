@@ -57,6 +57,12 @@
           "hail": "Hail",
           "test_alarm": "Test alarm"
         }
+      },
+      "last_error_type": {
+        "name": "Last error type"
+      },
+      "last_error_message": {
+        "name": "Last error message"
       }
     }
   }

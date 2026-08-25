@@ -5,7 +5,8 @@ Exception hierarchy:
     HagelschutzVkfApiClientError (base)
     ├── HagelschutzVkfApiClientCommunicationError (network/timeout/HTTP error)
     ├── HagelschutzVkfApiClientDeviceNotFoundError (vendor reports the device/hwtype as unknown)
-    └── HagelschutzVkfApiClientVendorError (any other vendor-reported error, message carried verbatim)
+    └── HagelschutzVkfApiClientVendorError (any other vendor-reported error, exception name and message carried
+        verbatim)
 
 The vendor endpoint requires no authentication, so unlike the blueprint's example
 client there is no ...AuthenticationError and the coordinator never raises
