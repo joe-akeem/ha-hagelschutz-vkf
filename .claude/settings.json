@@ -1,5 +1,29 @@
 {
-  "permissions": {
-    "deny": ["Bash", "mcp__jetbrains__execute_terminal_command", "mcp__mcp-gateway__execute_terminal_command"]
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|shell|exec_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$(git rev-parse --show-toplevel)/.agents/hooks/pre-push-check.sh\"",
+            "timeout": 300,
+            "statusMessage": "Running script/lint-check and script/type-check before push…"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$(git rev-parse --show-toplevel)/.agents/hooks/remind-dependency-sync.sh\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
   }
 }
