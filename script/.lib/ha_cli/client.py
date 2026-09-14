@@ -182,7 +182,7 @@ class HaClient:
         while (remaining := deadline - loop.time()) > 0:
             try:
                 message = await asyncio.wait_for(ws.receive_json(), timeout=remaining)
-            except (TimeoutError, TypeError):
+            except TimeoutError, TypeError:
                 return
             if message.get("id") != message_id:
                 continue
